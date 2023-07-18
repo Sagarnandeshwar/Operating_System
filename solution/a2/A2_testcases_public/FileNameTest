@@ -1,0 +1,2 @@
+exec A2_testcases_public/file1 A2_testcases_public/file2 A2_testcases_public/file1 FCFS
+exec A2_testcases_public/file2 A2_testcases_public/file2 FCFS
