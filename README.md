@@ -33,12 +33,13 @@ The starter shell supports the following commands:
 
 ### One-liners 
 Chaining of instructions so that the shell can take as input multiple commands separated by semicolons (the ; symbol)
-
 Assumptions:
 - The instructions separated by semicolons are executed one after the other. 
 - The total length of the combined instructions does not exceed MAX_USER_INPUT. 
 - There will be at most 10 chained instructions 
 - Semicolon is the only accepted separator
+- 
+![One Liner](https://github.com/Sagarnandeshwar/Operating-System/blob/main/images/oneline.png)
 
 ## Concurrent processing
 Concurrent processing, also known as concurrent computing or parallel processing, refers to a computing paradigm where multiple tasks or processes are executed simultaneously or overlapping in time. The primary goal of concurrent processing is to increase overall system efficiency, reduce processing time, and improve resource utilization by handling multiple tasks concurrently. 
@@ -57,8 +58,7 @@ The current instruction to execute
   - The scheduler switches processes in and out of the ready queue, according to the scheduling policy 
   - When a process is done executing, it is cleaned up and the next process in the ready queue starts executing. 
 5. **Clean-up:** Finally, after the SCRIPT terminates, the program remove the SCRIPT source code from the Shell memory.
-
-
+    
 Assumptions:
 - The shell memory is large enough to hold three scripts and still have a bit of extra space. The size of the Shell memory is 1000 lines, thus each script will have at most 300 lines of source code.  
 - You can also assume that each command (i.e., line) in the scripts will not be larger than 100 characters.
@@ -90,10 +90,13 @@ Assumptions
 
 ### Scheduling Policies
 The OS supports the following Scheduling Policies:
-- **FCFS (First come First Serve):** The interpreter executes the tasks in the order they arrive or enter the system. 
+- **FCFS (First come First Serve):** The interpreter executes the tasks in the order they arrive or enter the system.
+![FCFS](https://github.com/Sagarnandeshwar/Operating-System/blob/main/images/fcfs.png)
 - **SJF (Shortest Job First):** The interpreter gives highest priority to the task with the shortest execution time and is scheduled for execution first, 
-- **RR (Round-Robin):** The interpreter allocates a fixed time slice to each task in the system, and when a task's time slice expires, it is preempted, and the next task in the queue is given the CPU for its time slice. 
-- **SJF with aging:** Aging is a technique used to gradually increase the priority of waiting tasks over time, ensuring that long-waiting tasks eventually get a chance to execute. 
+- **RR (Round-Robin):** The interpreter allocates a fixed time slice to each task in the system, and when a task's time slice expires, it is preempted, and the next task in the queue is given the CPU for its time slice.
+![SJF and RR](https://github.com/Sagarnandeshwar/Operating-System/blob/main/images/sjf_rr.png)
+- **SJF with aging:** Aging is a technique used to gradually increase the priority of waiting tasks over time, ensuring that long-waiting tasks eventually get a chance to execute.
+![AGING](https://github.com/Sagarnandeshwar/Operating-System/blob/main/images/aging.png)
 
 Mechanism:  
 - **For SJF** use the number of lines of code in each program to estimate the job length. 
@@ -130,9 +133,13 @@ The run and exec commands to use paging.
 3. **Code loading** The shell will load script(s) into the frame memory as follows,
 - The script(s) are copied into the backing store. The original script files (in the current directory) are closed, and the files in the backing store are opened. If exec has identical arguments, the program will be copied into the backing store multiple times. This allow us to run the same program multiple times within an exec command.
 - We use the files in the backing store to load program pages into the frame store.
-- When a page is loaded into the frame store, it must be placed in the first free spot (i.e., the first available hole). 
+- When a page is loaded into the frame store, it must be placed in the first free spot (i.e., the first available hole).
 
-4. **Creating the page table** For each script, a page table needs to be added to its PCB to keep track of the loaded pages and their corresponding frames in memory.  
+![Frame Store](https://github.com/Sagarnandeshwar/Operating-System/blob/main/images/frame_store.png)
+
+4. **Creating the page table** For each script, a page table needs to be added to its PCB to keep track of the loaded pages and their corresponding frames in memory.
+
+![Table](https://github.com/Sagarnandeshwar/Operating-System/blob/main/images/table.png)
 
 Assumptions: 
 - The frame store is large enough to hold all the pages for all the programs.
@@ -164,7 +171,8 @@ Implement a new command that allows us to reset the variable store, called reset
    - The current process P is interrupted and placed at the back of the ready queue, even if it may still have code lines left in its “time slice”. The scheduler selects the next process to run from the ready queue.
    - The missing page for process P is brought into the frame store from the file in the backing store. P’s page table needs to be updated accordingly. The new page is loaded into the first free slot in the frame store if a free slot exists in the frame store.
    - If the frame store is full, we need to pick a victim frame to evict from the frame store.
-   - P will resume running whenever it comes next in the ready queue, according to the scheduling policy. 
+   ![Eviction](https://github.com/Sagarnandeshwar/Operating-System/blob/main/images/eviction.png)
+   - P will resume running whenever it comes next in the ready queue, according to the scheduling policy.
 
 ### Page Replacement Policy 
 For eviction (page replacement) we use Least Recently Used (LRU). The program keep track of the least recently used frame in the entire frame store and evicts it. 
